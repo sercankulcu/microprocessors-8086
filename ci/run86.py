@@ -106,7 +106,9 @@ def assemble(path, tmp):
     cmd = [find_uasm(), '-nologo', '-q', '-W2', '-I' + INC, '-I' + os.path.dirname(path),
            '-mz' if exe else '-bin', '-Fo' + out, '-Fl' + lst, asm]
     r = subprocess.run(cmd, capture_output=True, text=True, errors='replace')
-    msg = (r.stdout + r.stderr).strip()
+    msg = re.sub(r'\x1b\[[0-9;]*m', '', r.stdout + r.stderr)           # Linux surumunun renkleri
+    msg = '\n'.join(l for l in msg.split('\n') if l.strip() and not re.match(
+        r'\s*(UASM v|Portions Copyright|Source code is available)', l)).strip()
     if r.returncode or not os.path.exists(out):
         return None, msg, None, exe
     return open(out, 'rb').read(), msg, symbols(lst), exe
