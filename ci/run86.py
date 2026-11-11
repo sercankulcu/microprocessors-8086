@@ -103,15 +103,22 @@ def assemble(path, tmp):
     base = os.path.join(tmp, re.sub(r'\W', '_', os.path.relpath(path, REPO)))
     asm, out, lst = base + '.asm', base + ('.exe' if exe else '.com'), base + '.lst'
     open(asm, 'w', encoding='latin-1', errors='replace').write(body)
-    cmd = [find_uasm(), '-nologo', '-q', '-W2', '-I' + INC, '-I' + os.path.dirname(path),
-           '-mz' if exe else '-bin', '-Fo' + out, '-Fl' + lst, asm]
-    r = subprocess.run(cmd, capture_output=True, text=True, errors='replace')
-    msg = re.sub(r'\x1b\[[0-9;]*m', '', r.stdout + r.stderr)           # Linux surumunun renkleri
-    msg = '\n'.join(l for l in msg.split('\n') if l.strip() and not re.match(
-        r'\s*(UASM v|Portions Copyright|Source code is available)', l)).strip()
+    # Etiket adresleri yalnizca BELLEK yonergesi icin gerekir ve listeleme dosyasindan okunur.
+    # UASM 2.57'nin Linux surumu bazi dosyalarin listelemesini yazarken cokuyor
+    # ("buffer overflow detected"); o zaman listelemesiz yeniden denenir.
+    want_list = bool(re.search(r'^\s*;\s*BELLEK\s*:', src, re.M))
+    for with_list in ([True, False] if want_list else [False]):
+        cmd = [find_uasm(), '-nologo', '-q', '-W2', '-I' + INC, '-I' + os.path.dirname(path),
+               '-mz' if exe else '-bin', '-Fo' + out] + (['-Fl' + lst] if with_list else []) + [asm]
+        r = subprocess.run(cmd, capture_output=True, text=True, errors='replace')
+        msg = re.sub(r'\x1b\[[0-9;]*m', '', r.stdout + r.stderr)       # Linux surumunun renkleri
+        msg = '\n'.join(l for l in msg.split('\n') if l.strip() and not re.match(
+            r'\s*(UASM v|Portions Copyright|Source code is available)', l)).strip()
+        if not (with_list and 'buffer overflow' in msg):
+            break
     if r.returncode or not os.path.exists(out):
         return None, msg, None, exe
-    return open(out, 'rb').read(), msg, symbols(lst), exe
+    return open(out, 'rb').read(), msg, symbols(lst) if with_list else {}, exe
 
 
 def symbols(lst):
