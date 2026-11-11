@@ -1,6 +1,6 @@
 ; Iki sozcuk degiskeni toplayip ucuncusune yazma: 105h + 103h = 208h.
 ; Sunum 4.2 Degiskenler, slayt "Değişkenleri Toplama".
-ORG 100h        ; sunumda yok: slaytta ORG yok
+ORG 100h
 jmp start
 value1 DW 105h  ; ilk değer 105h
 value2 DW 103h  ; ilk değer 103h
@@ -9,7 +9,7 @@ start:
 MOV AX, value1  ; AX ← value1
 ADD AX, value2  ; AX ← AX + value2
 MOV result, AX  ; result ← AX
-RET             ; sunumda yok: slaytta program burada bitmiyor
+RET
 end start
 
 ; YAZMACLAR: AX CF ZF PF

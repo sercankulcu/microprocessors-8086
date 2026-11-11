@@ -2,7 +2,7 @@
 ; 04h 0Ch 08h 09h. adim = 6'dan baslar: ilk OUT yarim[7] = 09h, sonra dizi basa sarar.
 ; AND BX, 7 dizini 0-7'de tutar. Sonsuz dongu: SINIR ilk birkac adimi gosterir.
 ; Kaynak: Bolum 10.2 Aygit Kontrolu, "Yarım Adım Sürüşü: Kod İzleme"
-; ("Gerçek Motor Dizileri" slaytindaki ayni kod, orada adim dw 0 ve tablo basta)
+; ("Gerçek Motor Dizileri" slaytindaki kodun gecikmesiz bicimi: motor_dizileri.asm)
 ; SINIR: 27
 ; YAZMACLAR: BX AL
 ; BELLEK: adim 2

@@ -1,6 +1,6 @@
 ; DW dizisinde i. elemanin indisi 2 x i'dir; w[1] iki elemanin ortasindan okur.
 ; Sunum 4.2 Degiskenler, slayt "Sözcük Dizileri".
-ORG 100h       ; sunumda yok
+ORG 100h
 MOV AX, w[0]   ; 1. eleman
 MOV BX, w[2]   ; 2. eleman
 MOV SI, 4

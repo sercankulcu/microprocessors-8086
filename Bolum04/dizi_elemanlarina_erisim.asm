@@ -1,6 +1,6 @@
 ; Dizi elemanina sabit indisle (a[3]) ve indis yazmaciyla (a[SI]) erisim; a[1] <- 'E'.
 ; Sunum 4.2 Degiskenler, slayt "Dizi Elemanlarına Erişim".
-ORG 100h       ; sunumda yok
+ORG 100h
 MOV AL, a[3]   ; a + 3
 MOV SI, 0
 MOV BL, a[SI]  ; a + 0

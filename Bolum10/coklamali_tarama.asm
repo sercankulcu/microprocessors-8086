@@ -1,8 +1,9 @@
 ; Coklamali tarama: dort hanenin bolut uclari ortak port A'da (310h = 784), hane secimi
 ; port C'de (312h = 786). Her hane icin once tum haneler sondurulur, bolut kodu yazilir, sonra
-; yalniz o hane yakilir; 1234 surekli taranir. SINIR tam bir tarama (16 komut x 4 hane + 2).
+; yalniz o hane yakilir ve bekle_4ms (CX = 1000 tur LOOP) beklenir; 1234 surekli taranir.
+; SINIR tam bir taramayi kapsar (her hane 11 + 1 + 1 + 1000 + 1 + 3 = 1017 komut).
 ; Kaynak: Bolum 10.2 Aygit Kontrolu, "Gösterge Tablosu ve Tarama" (ikinci parca)
-; SINIR: 66
+; SINIR: 4000
 
 ORG 100h          ; sunumda yok
 tara:
@@ -12,7 +13,7 @@ mov dx, 312h      ; port C: hane seçimi
 mov al, 0
 out dx, al        ; önce tüm haneler sönük
 mov al, rakam[si]
-mov bx, offset kod
+mov bx, offset kod   ; soldaki tablo
 xlat
 mov dx, 310h      ; port A: bölütler
 out dx, al
@@ -24,10 +25,13 @@ inc si
 cmp si, 4
 jb  hane
 jmp tara
+bekle_4ms:         ; ≈ 4 ms gecikme
+mov cx, 1000
+loop $
+ret
 rakam db 1, 2, 3, 4
 secim db 01h, 02h, 04h, 08h
-bekle_4ms: ret    ; sunumda yok: gecikme yordami (burada yalniz RET)
-kod db 3Fh,06h,5Bh,4Fh,66h   ; sunumda yok: ilk parcadaki tablo
+kod db 3Fh,06h,5Bh,4Fh,66h   ; sunumda yok: ilk parcadaki (soldaki) tablo
     db 6Dh,7Dh,07h,7Fh,6Fh   ; sunumda yok
 
 ; Beklenen cikti:

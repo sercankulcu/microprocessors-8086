@@ -1,6 +1,6 @@
 ; DD, iki DW, dort DB ve ikili DD ayni dort bayti (78 56 34 12) uretir; DX:AX'e yukleme.
 ; Sunum 4.2 Degiskenler, slayt "Çift Sözcük Değişken".
-ORG 100h        ; sunumda yok: slaytta ORG yok
+org 100h
 jmp start
 mydouble dd 12345678h  ; double word
 mywords  dw 5678h      ; 2 ayrı word
@@ -13,7 +13,7 @@ data dd 00010010001101000101011001111000b
 start:  ; data'yı DX:AX'e yükle
 mov ax, word ptr data
 mov dx, word ptr [data+2]
-RET             ; sunumda yok: slaytta program burada bitmiyor
+ret
 
 ; YAZMACLAR: DX AX
 ; BELLEK: mydouble 4

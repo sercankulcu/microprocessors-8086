@@ -11,7 +11,7 @@ xlat              ; AL = [BX + AL] = 4Fh
 ; not al          ; ortak anot ise
 mov dx, 310h     ; 8255 port A
 out dx, al
-ret              ; sunumda yok
+ret
 kod db 3Fh,06h,5Bh,4Fh,66h
     db 6Dh,7Dh,07h,7Fh,6Fh
 
