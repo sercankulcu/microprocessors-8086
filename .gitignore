@@ -1,0 +1,5 @@
+*.com
+*.exe
+*.lst
+*.obj
+__pycache__/

@@ -1,0 +1,23 @@
+name: build
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  bolum:
+    name: 8086 programlari (UASM + unicorn)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Araclari kur
+        run: |
+          pip install unicorn==2.1.4
+          curl -sSL -o uasm.zip https://github.com/Terraspace/UASM/releases/download/v2.57r/uasm257_linux64.zip
+          mkdir -p "$HOME/uasm" && unzip -q uasm.zip -d "$HOME/uasm"
+          bin=$(find "$HOME/uasm" -type f -iname 'uasm*' ! -iname '*.*' | head -1)
+          chmod +x "$bin"
+          echo "UASM=$bin" >> "$GITHUB_ENV"
+      - name: Derle, calistir, ciktiyi karsilastir
+        run: python ci/run86.py
