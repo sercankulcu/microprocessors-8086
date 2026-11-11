@@ -5,7 +5,7 @@
     python ci/run86.py Bolum07            # yalnizca verilen klasorler / dosyalar
     python ci/run86.py -v Bolum07/x.asm   # programin ciktisini da bas
 
-Derleyici UASM'dir (MASM uyumlu; emu8086 sozdizimi buna cok yakindir). Yolu UASM ortam
+Derleyici UASM'dir (MASM uyumlu; emu8086 sozdizimi buna cok yakindir). Yolu UASM_BIN ortam
 degiskeninden ya da PATH'teki uasm / uasm64 'ten alinir. Programlar unicorn ile 8086
 gercek kipinde calistirilir; DOS (INT 21h) ve BIOS (INT 10h, 16h, 1Ah, 15h) servisleri
 burada yazilidir.
@@ -53,11 +53,11 @@ class Stop(Exception):
 # ---------------------------------------------------------------- derleme
 
 def find_uasm():
-    for c in (os.environ.get('UASM'), shutil.which('uasm'), shutil.which('uasm64'),
+    for c in (os.environ.get('UASM_BIN'), shutil.which('uasm'), shutil.which('uasm64'),
               r'C:\Users\Sercan\tools\uasm\uasm64.exe'):
         if c and os.path.exists(c):
             return c
-    sys.exit('UASM bulunamadi (UASM ortam degiskeni ya da PATH)')
+    sys.exit('UASM bulunamadi (UASM_BIN ortam degiskeni ya da PATH)')
 
 
 def prepare(src):

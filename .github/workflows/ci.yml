@@ -18,6 +18,6 @@ jobs:
           mkdir -p "$HOME/uasm" && unzip -q uasm.zip -d "$HOME/uasm"
           bin=$(find "$HOME/uasm" -type f -iname 'uasm*' ! -iname '*.*' | head -1)
           chmod +x "$bin"
-          echo "UASM=$bin" >> "$GITHUB_ENV"
+          echo "UASM_BIN=$bin" >> "$GITHUB_ENV"   # UASM adli degisken derleyicinin kendi secenekleridir
       - name: Derle, calistir, ciktiyi karsilastir
         run: python ci/run86.py
