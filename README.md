@@ -1,6 +1,6 @@
 # 8086 Assembly for Microprocessors
 
-8086 assembly code for the undergraduate **Microprocessors (Mikroişlemciler)** course at Giresun University. Each `BolumNN` folder holds chapter NN of the course and contains the code shown on that chapter's slides as small runnable emu8086-style programs. Instructions, labels and comments follow the slides, and every program runs the example from the slides and the lecture notes, so its result can be compared directly with them. The expected output is at the end of each file.
+8086 assembly code for the undergraduate **Microprocessors (Mikroişlemciler)** course at Giresun University. An English edition, with English labels, comments and output, is [microprocessors-8086-en](https://github.com/sercankulcu/microprocessors-8086-en). Each `BolumNN` folder holds chapter NN of the course and contains the code shown on that chapter's slides as small runnable emu8086-style programs. Instructions, labels and comments follow the slides, and every program runs the example from the slides and the lecture notes, so its result can be compared directly with them. The expected output is at the end of each file.
 
 Course page, slides, lecture notes and the course book: <https://sercankulcu.github.io/teaching/microprocessors/>
 
